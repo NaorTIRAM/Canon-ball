@@ -1,0 +1,27 @@
+Quartus II Archive log --	C:/Users/Naor/Desktop/Final Project/Projet.qarlog
+
+Archive:	C:/Users/Naor/Desktop/Final Project/Projet.qar
+Date:		Fri Nov 11 14:07:18 2022
+Quartus II		9.1 Build 350 03/24/2010 SP 2 SJ Web Edition
+
+	=========== Files Selected: ===========
+C:/Users/Naor/Desktop/Final Project/CalcAngle.vhd
+C:/Users/Naor/Desktop/Final Project/CalcPosShell.vhd
+C:/Users/Naor/Desktop/Final Project/CalcPosTarget.vhd
+C:/Users/Naor/Desktop/Final Project/CounterX.vhd
+C:/Users/Naor/Desktop/Final Project/CounterY.vhd
+C:/Users/Naor/Desktop/Final Project/FPGA.vhd
+C:/Users/Naor/Desktop/Final Project/FPGA_Proj.tcl
+C:/Users/Naor/Desktop/Final Project/GeneRGB.vhd
+C:/Users/Naor/Desktop/Final Project/Projet.dpf
+C:/Users/Naor/Desktop/Final Project/Projet.qpf
+C:/Users/Naor/Desktop/Final Project/Projet.qsf
+C:/Users/Naor/Desktop/Final Project/Projet.vhd
+C:/Users/Naor/Desktop/Final Project/Projet_pack.vhd
+C:/Users/Naor/Desktop/Final Project/de0_pins.tcl
+C:/Users/Naor/Desktop/Final Project/de0_pins1.tcl
+c:/altera/91sp2/quartus/bin/assignment_defaults.qdf
+	======= Total: 16 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.

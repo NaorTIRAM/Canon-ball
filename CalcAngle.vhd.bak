@@ -1,0 +1,31 @@
+library ieee ;
+use ieee.std_logic_1164.all ;
+use ieee.std_logic_unsigned.all ;
+use work.Projet_pack.all;
+
+-- this entity is for the angle of the bomb that we shot.
+entity CalcAngle is 
+	port
+	(	signal Plus	    : in	std_logic; --is the botton
+		signal iAngle	: out	integer range 1 to 13
+	);
+end CalcAngle;
+
+architecture CalcAngle_arch of CalcAngle is
+	signal Cpt_int	: integer range 1 to 13;
+
+begin
+	process(Plus)
+	begin
+		if(Plus'event and Plus='1') then
+			if(Cpt_int > 13) then
+				Cpt_int <= 1;
+			else
+				Cpt_int <= Cpt_int + 1;
+			end if;
+		end if;
+	end process;
+	
+	iAngle <= Cpt_int;
+
+end CalcAngle_arch;

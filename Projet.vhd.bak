@@ -1,0 +1,120 @@
+library ieee ;
+use ieee.std_logic_1164.all ;
+use ieee.std_logic_unsigned.all ;
+
+entity Projet is
+
+	port
+	(	--input	
+		stHorloge50MHz			:in std_logic;
+		stv3KEY					:in std_logic_vector(2 downto 0);	--poussoirs de la maquette
+		stv10SW					:in std_logic_vector(9 downto 0);	--inters de la maquette	
+		
+		stv8LEDG				:out std_logic_vector(7 downto 0);
+		
+		stR						:out std_logic;
+		stG						:out std_logic;
+		stB						:out std_logic;
+		stVGA_SynchroLigne		:out std_logic;
+		stVGA_SynchroTrame		:out std_logic
+	);
+end Projet;
+
+use work.Projet_pack.all;
+Architecture Projet_arch of Projet is
+	
+	signal stEnVGA_int		: std_logic;
+	signal stPause_int		: std_logic;
+	
+	signal stFinLigne_int	: std_logic;	
+	signal stFinImage_int	: std_logic;
+	signal stInitS_int 		: std_logic;
+	signal stFeu_int		: std_logic;
+	
+	signal stPlus_int		: std_logic;
+	signal iAngle_int		: integer range 1 to 13;
+	
+	signal iX_int			: integer range 0 to iXABCD;
+	signal iY_int			: integer range 0 to iYABCD;
+	
+	signal iXShell_int		: integer range 0 to iXABCD;
+	signal iYShell_int		: integer range 0 to iYABCD;
+	
+	signal iXcible_int		: integer range 0 to iXABCD;
+	signal iYcible_int		: integer range 0 to iYABCD;
+begin
+    stFeu_int 	<= stv10SW(0); --active
+	stInitS_int <= stv10SW(1); --action
+	stPause_int <= stv10SW(2); -- pause 
+	stEnVGA_int <= not stv10SW(3); --black screen
+	stPlus_int	<= stv3KEY(2); --change distance
+	stv8LEDG(4) <= stEnVGA_int;  --led is on if screen is working
+	stv8LEDG(3)	<= (not stInitS_int) and (not stPause_int); --for the pause
+	 
+	
+	CounterX_Ex1 : CounterX
+		port map
+		(	stClk			=>	stHorloge50MHz,
+			iX				=>	iX_int,
+			stEnVGA			=>	stEnVGA_int,
+			stSynchroLigne 	=> 	stVGA_SynchroLigne,
+			stFinLigne		=>	stFinLigne_int
+		);
+	
+	CounterY_Ex1 : CounterY
+		port map
+		(	stClk			=>	stHorloge50MHz,
+			stEnC			=>	stFinLigne_int,
+			iY				=>	iY_int,
+			stSynchroTrame 	=> 	stVGA_SynchroTrame,
+			stFinImage	 	=> 	stFinImage_int			
+		);
+		
+	GeneRGB_Ex1 : GeneRGB 	
+		port map
+		(	iX			=>	iX_int,
+			iY			=>	iY_int,
+			iXShell		=>	iXShell_int,
+			iYShell		=>	iYShell_int,
+			iXcible		=>	iXcible_int,
+			iYcible		=>	iYcible_cte,
+			iAngle		=>	iAngle_int,
+			stFeu		=>	stFeu_int,
+			stR			=>	stR,
+			stG			=>	stG,
+			stB			=>	stB
+		);
+
+	CalcPosShell_Ex1 : CalcPosShell 
+		port map
+		(	stClk		=>	stHorloge50MHz,
+			stInitS		=>	stInitS_int,
+			stFinImage 	=>	stFinImage_int,
+			stPause		=>	stPause_int,
+			stFeu		=>	stFeu_int,
+			iAngle		=>	iAngle_int,
+			iXShell		=>	iXShell_int,
+			iYShell		=>	iYShell_int
+		);
+		
+	CalcPosTarget_Ex1 : CalcPosTarget
+		port map
+		(	stClk		=>	stHorloge50MHz,
+			stAleat		=>	stInitS_int,
+			iXcible		=>	iXcible_int
+		);
+		
+	CalcAngle_Ex1 : CalcAngle
+		port map
+		(	
+			stPlus		=>	stPlus_int,
+			iAngle		=>	iAngle_int
+		);
+	
+	
+end Projet_arch;
+
+
+
+
+
